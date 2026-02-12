@@ -2,9 +2,9 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
 class Settings(BaseSettings):
-    ALPHA_VANTAGE_TOKEN: str
+    TOKEN_COINGECKO: str
     
-    TELEGRAM_TOKEN: str
+    TOKEN_TELEGRAM: str
 
     DRIVER: str = 'sqlite+aiosqlite://'
     SYNC_DRIVER: str = 'sqlite://'
