@@ -3,7 +3,6 @@ import requests
 import json
 
 from typing import Dict
-from domain.entities import Crypto
 
 
 class CryptoAPI:
@@ -55,6 +54,35 @@ class CryptoAPI:
                 prices[coin] = value
 
         return prices
+    
+    def get_trending(self):
+        url = 'https://api.coingecko.com/api/v3/search/trending'
+        params= {
+            'x_cg_demo_api_key': self.TOKEN,
+            }
+        response = requests.get(
+            url=url,
+            params=params,
+        )
+        data = response.json()
+        return data
+    
+    def get_markets(self, coins: str):
+        '''Полные рыночные данные'''
+        url = 'https://api.coingecko.com/api/v3//coins/markets'
+        params = {
+            'ids': coins,
+            'order': 'market_cap_desc',
+            'x_cg_demo_api_key': self.TOKEN,
+        }
+        response = requests.get(
+            url=f'{self.link_api}/coins/marketsl',
+            params=params,
+        )
+        data = response.json()
+        return data
 
 obj = CryptoAPI()
-print(obj.get_price('btc,eth,sol,ton'))
+#print(obj.get_price('btc,eth,sol,ton'))
+#print(obj.get_trending())
+print(obj.get_markets('btc'))
