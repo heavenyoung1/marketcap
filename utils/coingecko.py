@@ -18,7 +18,7 @@ class CryptoAPI:
         self.TOKEN: str = settings.TOKEN_COINGECKO
         self.link_api: str = 'https://api.coingecko.com/api/v3/simple/price?vs_currencies=usd'
 
-    def get_price(self, coins: str, prices: Dict = None) -> Dict[str, float]:
+    def get_crypto(self, coins: str, prices: Dict = None) -> Dict[str, float]:
         '''
         Получает текущие цены для указанных криптовалют.
         
@@ -55,6 +55,28 @@ class CryptoAPI:
 
         return prices
     
+    def get_commodities(self, commodities: str):
+        prices = dict()
+        url = 'https://api.coingecko.com/api/v3/simple/price'
+
+        params = {
+            'symbols': commodities,
+            'vs_currencies': 'usd',
+            'x_cg_demo_api_key': self.TOKEN,
+        }
+        response = requests.get(
+            url=url,
+            params=params,
+        )
+        data = response.json()
+        print(f'[DATA] {data}')
+        for commodities, price in data.items():
+            for curency, value in price.items():
+                prices[commodities] = value
+
+        return prices
+
+
     def get_trending(self):
         url = 'https://api.coingecko.com/api/v3/search/trending'
         params= {
@@ -85,4 +107,4 @@ class CryptoAPI:
 obj = CryptoAPI()
 #print(obj.get_price('btc,eth,sol,ton'))
 #print(obj.get_trending())
-print(obj.get_markets('btc'))
+print(obj.get_commodities('xau,xag,xpt,xpd'))

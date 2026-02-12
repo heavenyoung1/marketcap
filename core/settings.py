@@ -3,6 +3,7 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 
 class Settings(BaseSettings):
     TOKEN_COINGECKO: str
+    TOKEN_NINJAS: str
     
     TOKEN_TELEGRAM: str
 
